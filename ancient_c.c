@@ -153,7 +153,8 @@ _mark (value obj, area *ptr, area *restore, area *fixups)
   // XXX Actually this fails if you try to persist a zero-length
   // array.  Needs to be fixed, but it breaks some rather important
   // functions below.
-  assert (Wosize_hp (header) > 0);
+  if (Wosize_hp (header) == 0)
+    caml_failwith ("ooh no");
 
   // Offset where we will store this object in the out-of-heap memory.
   size_t offset = ptr->n;
@@ -317,6 +318,11 @@ ancient_mark_info (value obj)
   CAMLlocal3 (proxy, info, rv);
 
   size_t size;
+
+  header_t *header = (header_t *) Hp_val (obj);
+  if (Wosize_hp (header) == 0)
+    caml_failwith ("fatal error");
+
   void *ptr = mark (obj, my_realloc, my_free, 0, &size);
 
   // Make the proxy.
@@ -468,6 +474,11 @@ ancient_share_info (value mdv, value keyv, value obj)
 
   // Do the mark.
   size_t size;
+
+  header_t *header = (header_t *) Hp_val (obj);
+  if (Wosize_hp (header) == 0)
+    caml_failwith ("fatal error");
+
   void *ptr = mark (obj, mrealloc, mfree, md, &size);
 
   // Add the key to the keytable.
