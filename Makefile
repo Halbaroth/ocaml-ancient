@@ -26,10 +26,10 @@ TARGETS		:= mmalloc ancient.cma ancient.cmxa META \
 all:	$(TARGETS)
 
 ancient.cma: ancient.cmo ancient_c.o
-	ocamlmklib -o ancient -Lmmalloc -lmmalloc $^
+	ocamlmklib -o ancient -lmmalloc $^
 
 ancient.cmxa: ancient.cmx ancient_c.o
-	ocamlmklib -o ancient -Lmmalloc -lmmalloc $^
+	ocamlmklib -o ancient -lmmalloc $^
 
 test_ancient_dict_write.opt: ancient.cmxa test_ancient_dict.cmx test_ancient_dict_write.cmx
 	LIBRARY_PATH=.:$$LIBRARY_PATH \
