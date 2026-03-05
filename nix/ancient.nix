@@ -1,15 +1,12 @@
-{ src
-, lib
-, buildDunePackage
-, git
+{
+  buildDunePackage,
+  lib,
 }:
 
 buildDunePackage {
   pname = "ancient";
-  inherit src;
   version = "dev";
-
-  nativeBuildInputs = [ git ];
+  src = ../.;
 
   meta = {
     description = "Ancient library";
