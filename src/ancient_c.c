@@ -26,7 +26,7 @@
 
 // Area is an expandable buffer, allocated on the C heap.
 typedef struct area {
-  void *ptr;			// Start of area.
+  char *ptr;			// Start of area.
   size_t n;			// Current position.
   size_t size;			// Allocated size.
 
@@ -205,7 +205,7 @@ _mark (value obj, area *ptr, area *restore, area *fixups)
 		    Field (obj_copy, i) =
 			    field_offset + sizeof (header_t);
 
-		    size_t fixup = (void *)&Field(obj_copy, i) - ptr->ptr;
+		    size_t fixup = (char *)&Field(obj_copy, i) - ptr->ptr;
 		    area_append (fixups, &fixup, sizeof fixup);
 	    }
     }
