@@ -216,7 +216,4 @@ mmalloc_findbase (size_t size)
   return ((PTR) base);
 }
 
-#else	/* defined(HAVE_MMAP) */
-/* Prevent "empty translation unit" warnings from the idiots at X3J11. */
-static char ansi_c_idiots __attribute__((unused)) = 69;
 #endif	/* defined(HAVE_MMAP) */
