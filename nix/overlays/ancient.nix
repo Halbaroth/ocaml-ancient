@@ -4,7 +4,7 @@ let
     ocamlPackages:
     ocamlPackages.overrideScope (
       final: prev: {
-        ancient = final.callPackage ./ancient.nix { };
+        ancient = final.callPackage ../ancient.nix { };
       }
     );
 in

@@ -62,7 +62,7 @@
         };
 
       flake.overlays = {
-        default = nixpkgs.lib.fixedPoints.composeManyExtensions [
+        default = inputs.nixpkgs.lib.fixedPoints.composeManyExtensions [
           (import ./nix/overlays/ocaml-nnp.nix)
           (import ./nix/overlays/ancient.nix)
         ];
