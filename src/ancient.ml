@@ -23,3 +23,19 @@ external share_info : md -> int -> 'a -> 'a ancient * info
 let share md key obj = fst (share_info md key obj)
 
 external get : md -> int -> 'a ancient = "ancient_get"
+
+let get x y =
+  if Sys.win32 then invalid_arg "Ancient.get: not supported"
+  else get x y
+
+let attach =
+  if Sys.win32 then invalid_arg "Ancient.attach: not supported"
+  else attach
+
+let detach =
+  if Sys.win32 then invalid_arg "Ancient.detach: not supported"
+  else detach
+
+let share x y z =
+  if Sys.win32 then invalid_arg "Ancient.share: not supported"
+  else share x y z

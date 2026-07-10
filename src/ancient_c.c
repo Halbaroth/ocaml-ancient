@@ -405,6 +405,8 @@ ancient_is_ancient (value obj)
   CAMLreturn (v);
 }
 
+#if defined(OS_TYPE_UNIX)
+
 CAMLprim value
 ancient_address_of (value obj)
 {
@@ -420,7 +422,6 @@ ancient_address_of (value obj)
 CAMLprim value
 ancient_attach (value fdv, value baseaddrv)
 {
-#if defined(OS_TYPE_UNIX)
   CAMLparam2 (fdv, baseaddrv);
   CAMLlocal1 (mdv);
 
@@ -436,15 +437,11 @@ ancient_attach (value fdv, value baseaddrv)
   Field (mdv, 0) = (value) md;
 
   CAMLreturn (mdv);
-#else
-  caml_invalid_argument("ancient_attach: not supported");
-#endif // OS_TYPE_UNIX
 }
 
 CAMLprim value
 ancient_detach (value mdv)
 {
-#if defined(OS_TYPE_UNIX)
   CAMLparam1 (mdv);
 
   void *md = (void *) Field (mdv, 0);
@@ -455,9 +452,6 @@ ancient_detach (value mdv)
   }
 
   CAMLreturn (Val_unit);
-#else
-  caml_invalid_argument("ancient_detach: not supported");
-#endif // OS_TYPE_UNIX
 }
 
 struct keytable {
@@ -468,7 +462,6 @@ struct keytable {
 CAMLprim value
 ancient_share_info (value mdv, value keyv, value obj)
 {
-#if defined(OS_TYPE_UNIX)
   CAMLparam3 (mdv, keyv, obj);
   CAMLlocal3 (proxy, info, rv);
 
@@ -522,15 +515,11 @@ ancient_share_info (value mdv, value keyv, value obj)
   Field (rv, 1) = info;
 
   CAMLreturn (rv);
-#else
-  caml_invalid_argument("ancient_share_info: not supported");
-#endif // OS_TYPE_UNIX
 }
 
 CAMLprim value
 ancient_get (value mdv, value keyv)
 {
-#if defined(OS_TYPE_UNIX)
   CAMLparam2 (mdv, keyv);
   CAMLlocal1 (proxy);
 
@@ -548,7 +537,28 @@ ancient_get (value mdv, value keyv)
   Field (proxy, 0) = (value) ptr;
 
   CAMLreturn (proxy);
-#else
-  caml_invalid_argument("ancient_get: not supported");
-#endif // OS_TYPE_UNIX
 }
+
+#else
+
+CAMLprim value ancient_get(value mdv, value keyv) {
+  CAMLparam2(mdv, keyv);
+  CAMLreturn(Val_none);
+}
+
+CAMLprim value ancient_attach(value mdv, value keyv) {
+  CAMLparam2(mdv, keyv);
+  CAMLreturn(Val_none);
+}
+
+CAMLprim value ancient_detach(value mdv, value keyv) {
+  CAMLparam2(mdv, keyv);
+  CAMLreturn(Val_none);
+}
+
+CAMLprim value ancient_share_info(value mdv, value keyv, value obj) {
+  CAMLparam3(mdv, keyv, obj);
+  CAMLreturn(Val_none);
+}
+
+#endif // OS_TYPE_UNIX

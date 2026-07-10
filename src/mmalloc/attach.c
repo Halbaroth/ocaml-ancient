@@ -20,6 +20,8 @@ License along with the GNU C Library; see the file COPYING.LIB.  If
 not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 Boston, MA 02111-1307, USA.  */
 
+#if defined(OS_TYPE_UNIX)
+
 #include <sys/types.h>
 #include <fcntl.h> /* After sys/types.h, at least for dpx/2.  */
 #include <sys/stat.h>
@@ -32,9 +34,6 @@ Boston, MA 02111-1307, USA.  */
 #ifndef SEEK_SET
 #define SEEK_SET 0
 #endif
-
-
-#if defined(HAVE_MMAP)
 
 /* Forward declarations/prototypes for local functions */
 
@@ -211,5 +210,4 @@ PTR mmalloc_attach (int fd, PTR baseaddr)
    return (NULL);
 }
 
-#endif	/* defined (HAVE_MMAP) */
-
+#endif // OS_TYPE_UNIX
