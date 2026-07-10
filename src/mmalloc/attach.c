@@ -198,16 +198,4 @@ reuse (int fd)
   return (mdp);
 }
 
-#else	/* !defined (HAVE_MMAP) */
-
-/* For systems without mmap, the library still supplies an entry point
-   to link to, but trying to initialize access to an mmap'd managed region
-   always fails. */
-
-/* ARGSUSED */
-PTR mmalloc_attach (int fd, PTR baseaddr)
-{
-   return (NULL);
-}
-
 #endif // OS_TYPE_UNIX
