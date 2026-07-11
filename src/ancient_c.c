@@ -405,8 +405,6 @@ ancient_is_ancient (value obj)
   CAMLreturn (v);
 }
 
-#if defined(OS_TYPE_UNIX)
-
 CAMLprim value
 ancient_address_of (value obj)
 {
@@ -418,6 +416,8 @@ ancient_address_of (value obj)
 
   CAMLreturn (v);
 }
+
+#if defined(OS_TYPE_UNIX)
 
 CAMLprim value
 ancient_attach (value fdv, value baseaddrv)
@@ -543,22 +543,22 @@ ancient_get (value mdv, value keyv)
 
 CAMLprim value ancient_get(value mdv, value keyv) {
   CAMLparam2(mdv, keyv);
-  CAMLreturn(Val_none);
+  CAMLreturn(Val_unit);
 }
 
 CAMLprim value ancient_attach(value mdv, value keyv) {
   CAMLparam2(mdv, keyv);
-  CAMLreturn(Val_none);
+  CAMLreturn(Val_unit);
 }
 
 CAMLprim value ancient_detach(value mdv, value keyv) {
   CAMLparam2(mdv, keyv);
-  CAMLreturn(Val_none);
+  CAMLreturn(Val_unit);
 }
 
 CAMLprim value ancient_share_info(value mdv, value keyv, value obj) {
   CAMLparam3(mdv, keyv, obj);
-  CAMLreturn(Val_none);
+  CAMLreturn(Val_unit);
 }
 
 #endif // OS_TYPE_UNIX
